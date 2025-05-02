@@ -3,9 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -19,6 +21,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
+        'image',
+        'bio',
         'email',
         'password',
     ];
@@ -42,4 +47,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function imageUrl()
+    {
+        if ($this->image) {
+            return Storage::url($this->image);
+        }
+        return null;
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
