@@ -16,17 +16,24 @@
                             @endforelse
                         </div>
                     </div>
-                    <div class="w-[320px] border-l px-8">
+                   <x-follow-section :user="$user">
                         <x-user-avatar :user="$user" size="w-24 h-24" />
                         <h3 class="mt-4">{{ $user->name }}</h3>
-                        <p class="text-gray-500">27k Followers</p>
+                        <p class="text-gray-500">
+                            <span x-text="followersCount"></span> Followers
+                        </p>
                         <p>{{ $user->bio }}</p>
+                        @if (auth()->user() && auth()->user()->id !== $user->id)
                         <div class="mt-4">
-                            <button class="bg-emerald-600 text-white px-4 py-2 rounded-full hover:bg-emerald-500 transition duration-200">
-                                Follow
-                            </button>
+                            <button 
+                                @click="follow()"
+                                class="text-white px-4 py-2 rounded-full transition duration-200"
+                                x-text="isFollowing ? 'Unfollow' : 'Follow'"
+                                :class="isFollowing ? 'bg-red-600 hover:bg-red-500' : 'bg-emerald-600 hover:bg-emerald-500'"
+                            ></button>
                         </div>
-                    </div>
+                        @endif
+                    </x-follow-section>
                 </div>
             </div>
         </div>

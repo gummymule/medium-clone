@@ -30,6 +30,11 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function claps()
+    {
+        return $this->hasMany(Clap::class);
+    }
+
     public function readTime($wordsPerMinute = 100)
     {
         // Calculate the reading time based on the number of words in the content

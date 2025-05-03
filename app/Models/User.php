@@ -48,6 +48,21 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'follower_id');
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
+    }
+
     public function imageUrl()
     {
         if ($this->image) {
@@ -56,8 +71,13 @@ class User extends Authenticatable
         return null;
     }
 
-    public function posts()
+    public function isFollowedBy(User $user)
     {
-        return $this->hasMany(Post::class);
+        return $this->followers->contains($user);
+    }
+
+    public function hasClapped(Post $post)
+    {
+        return $post->claps()->where('user_id', $this->id)->exists();
     }
 }
