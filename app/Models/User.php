@@ -71,8 +71,11 @@ class User extends Authenticatable
         return null;
     }
 
-    public function isFollowedBy(User $user)
+    public function isFollowedBy(?User $user)
     {
+        if (!$user) {
+            return false;
+        }
         return $this->followers->contains($user);
     }
 
