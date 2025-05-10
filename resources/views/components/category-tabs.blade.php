@@ -22,7 +22,11 @@
                 </a>
             </li>
         @empty
-            {{ $slot }}
+            <li class="me-2">
+                <span class="inline-block px-4 py-2 text-gray-500">
+                    {{ $slot }}
+                </span>
+            </li>
         @endforelse
     </ul>
 </div>
