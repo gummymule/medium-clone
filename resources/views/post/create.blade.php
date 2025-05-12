@@ -37,9 +37,7 @@
                     <!-- Content -->
                     <div class="mt-4">
                         <x-input-label for="content" :value="__('Content')" />
-                        <x-text-area id="content" class="block mt-1 w-full" type="text" name="content" autofocus>
-                        {{ old('content') }}
-                        </x-text-area>
+                        <x-forms.tinymce-editor id="content" name="content" value="{{ old('content') }}" />
                         <x-input-error :messages="$errors->get('content')" class="mt-2" />
                     </div>
 

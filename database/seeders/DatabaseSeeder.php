@@ -16,11 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory()->create([
-        //     'name' => 'Test user',
-        //     'username' => 'testuser',
-        //     'email' => 'test@example.com',
-        // ]);
 
         $categories = [
             'Technology',
@@ -39,6 +34,5 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        // Post::factory(100)->create();
     }
 }

@@ -16,8 +16,8 @@
                 {{ $post->title }}
             </h5>
         </a>
-        <div class="mb-3 font-normal text-gray-700">
-            {{ Str::words($post->content, 20) }}
+        <div class="mb-3 font-normal text-gray-700 line-clamp-3">
+            {!! Str::words(strip_tags($post->content), 20) !!}
         </div>
         <a href="{{ route('post.show', [
             'username' => $post->user->username,

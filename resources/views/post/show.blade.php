@@ -62,8 +62,8 @@
                 {{-- Content Section --}}
                 <div class="mt-8">
                     <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="w-full object-cover">
-                    <div class="mt-4">
-                        {{ $post->content }}
+                    <div class="mt-4 prose max-w-none">
+                        {!! $post->content !!}
                     </div>
                 </div>
                 {{-- Content Section --}}
