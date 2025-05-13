@@ -62,7 +62,29 @@
                 {{-- Content Section --}}
                 <div class="mt-8">
                     <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="w-full object-cover">
-                    <div class="mt-4 prose max-w-none">
+                    <div class="mt-4 px-4 prose max-w-4xl">
+                        <style>
+                            .prose p {
+                                text-align: justify !important;
+                                justify-content: center !important;
+                                line-height: 32px !important;
+                                margin: 2rem 0;
+                            }
+                            .prose pre {
+                                max-width: 80%;
+                                text-wrap: wrap;
+                            }
+                            .prose figure {
+                                margin: 2rem 0 !important; /* Atur jarak atas-bawah */
+                            }
+                            .prose img {
+                                display: block;
+                                justify-content: center !important;
+                                margin: 2rem auto;
+                                max-width: 100%;
+                                height: auto;
+                            }
+                        </style>
                         {!! $post->content !!}
                     </div>
                 </div>

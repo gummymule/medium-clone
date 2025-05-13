@@ -11,9 +11,6 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -21,33 +18,33 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        $user = $request->user();
         $data = $request->validated();
-        $image = $data['image'] ?? null;
 
-        if ($image) {
-            $data['image'] = $image->store('avatars', 'public');
+        // Handle image upload using Spatie Media Library
+        if (isset($data['image'])) {
+            $user->addMediaFromRequest('image')
+                 ->toMediaCollection('avatar');
         }
 
-
-        $request->user()->fill($data);
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        // Handle avatar removal if needed
+        if ($request->has('remove_avatar')) {
+            $user->clearMediaCollection('avatar');
         }
 
-        $request->user()->save();
+        $user->fill($request->except(['image', 'remove_avatar']));
+
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
+
+        $user->save();
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
