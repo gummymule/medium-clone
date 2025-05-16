@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: medium-clone
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        generateValue: true
+      - key: APP_URL
+        value: https://medium-clone.onrender.com
+      - key: DB_CONNECTION
+        value: mysql
+      - key: DB_HOST
+        value: 127.0.0.1
+      - key: DB_PORT
+        value: 3306
+      - key: DB_DATABASE
+        value: medium_app
+      - key: DB_USERNAME
+        value: root
+      - key: DB_PASSWORD
+        value: 0000
