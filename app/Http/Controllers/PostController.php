@@ -14,24 +14,16 @@ class PostController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-
     {
-        $user = auth()->user();
-        $query = Post::with(['user'])
-            ->where('published_at', '<=', now())
+        $posts = Post::with(['user'])
             ->withCount('claps')
-            ->latest();
-        if ($user) {
-            $ids = $user->following()->pluck('users.id');
-            $query->whereIn('user_id', $ids);
-        }
-        
-        $posts = $query->simplePaginate(5);
+            ->latest()
+            ->simplePaginate(5);
+
         return view('post.index', [
             'posts' => $posts,
         ]);
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -139,20 +131,12 @@ class PostController extends Controller
 
     public function category(Category $category)
     {
-        $user = auth()->user();
-        $query = $category->posts()
+        $posts = $category->posts()
             ->with(['user', 'category'])
-            ->where('published_at', '<=', now())
             ->withCount('claps')
-            ->latest();
+            ->latest()
+            ->simplePaginate(5);
 
-        if ($user) {
-            $ids = $user->following()->pluck('users.id');
-            $query->whereIn('user_id', $ids);
-        }
-        
-        $posts = $query->simplePaginate(5);
-        
         return view('post.index', [
             'posts' => $posts,
             'category' => $category,
@@ -168,6 +152,32 @@ class PostController extends Controller
             ->latest()->simplePaginate(5);
         return view('post.index', [
             'posts' => $posts,
+        ]);
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        
+        $posts = Post::with(['user', 'category'])
+            ->where(function($query) use ($search) {
+                $query->where('title', 'like', "%$search%")
+                    ->orWhere('content', 'like', "%$search%")
+                    ->orWhereHas('user', function($q) use ($search) {
+                        $q->where('name', 'like', "%$search%");
+                    })
+                    ->orWhereHas('category', function($q) use ($search) {
+                        $q->where('name', 'like', "%$search%");
+                    });
+            })
+            ->withCount('claps')
+            ->latest()
+            ->simplePaginate(5)
+            ->appends(['search' => $search]);
+        
+        return view('post.index', [
+            'posts' => $posts,
+            'search' => $search
         ]);
     }
 }

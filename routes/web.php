@@ -59,6 +59,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::post('/clap/{post}', [ClapController::class, 'clap'])
         ->name('clap');
+
+    Route::get('/search', [PostController::class, 'search'])
+        ->name('post.search');
 });
 
 Route::middleware('auth')->group(function () {

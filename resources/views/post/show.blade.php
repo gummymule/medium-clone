@@ -55,10 +55,6 @@
                 </div>
                 @endif
 
-                {{-- Clap section --}}
-                <x-clap-button :post="$post" />
-                {{-- Clap section --}}
-
                 {{-- Content Section --}}
                 <div class="mt-8">
                     <img src="{{ $post->imageUrl() }}" alt="{{ $post->title }}" class="w-full object-cover">
@@ -89,6 +85,10 @@
                     </div>
                 </div>
                 {{-- Content Section --}}
+
+                {{-- Clap section --}}
+                <x-clap-button :post="$post" />
+                {{-- Clap section --}}
 
                 <div class="mt-10">
                     <span class="px-4 py-2 text-md bg-gray-200 rounded-2xl">
