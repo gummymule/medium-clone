@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Media\CustomPathGenerator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -20,6 +21,7 @@ class User extends Authenticatable implements HasMedia
         'bio',
         'email',
         'password',
+        'image'
     ];
 
     protected $hidden = [
@@ -47,25 +49,21 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'user_id');
     }
 
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this->addMediaConversion('thumb')
-              ->width(100)
-              ->height(100)
-              ->sharpen(10);
-              
-        $this->addMediaConversion('avatar')
-              ->width(400)
-              ->height(400)
-              ->sharpen(10);
-    }
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatar')
-             ->singleFile()
-             ->useDisk('public')
-             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/gif']);
+            ->singleFile()
+            ->useDisk('public')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/gif', 'image/jpg']);
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('avatar')
+            ->width(400)
+            ->height(400)
+            ->sharpen(10)
+            ->format('jpg');
     }
 
     public function getAvatarUrl()
@@ -87,5 +85,16 @@ class User extends Authenticatable implements HasMedia
     public function hasClapped(Post $post)
     {
         return $post->claps()->where('user_id', $this->id)->exists();
+    }
+
+    // In User.php
+    public function savedPosts()
+    {
+        return $this->belongsToMany(Post::class, 'saved_posts')->withTimestamps();
+    }
+
+    public function hasSaved(Post $post)
+    {
+        return $this->savedPosts()->where('post_id', $post->id)->exists();
     }
 }

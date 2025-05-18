@@ -5,6 +5,7 @@ use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicProfileController;
+use App\Http\Controllers\SavedPostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +35,8 @@ Route::get('/@{username}/{post:slug}', [PostController::class, 'show'])
 Route::get('/category/{category}', [PostController::class, 'category'])
     ->name('post.byCategory');
 
+Route::get('/search', [PostController::class, 'search'])
+    ->name('post.search');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/post/create', [PostController::class, 'create'])
@@ -60,8 +63,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/clap/{post}', [ClapController::class, 'clap'])
         ->name('clap');
 
-    Route::get('/search', [PostController::class, 'search'])
-        ->name('post.search');
+    Route::prefix('saved')->group(function () {
+        Route::post('/{post}', [SavedPostController::class, 'toggleSave'])->name('post.save');
+        Route::get('/posts', [SavedPostController::class, 'index'])->name('savedPosts');
+    });
 });
 
 Route::middleware('auth')->group(function () {

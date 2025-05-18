@@ -23,15 +23,19 @@ class ProfileController extends Controller
         $user = $request->user();
         $data = $request->validated();
 
-        // Handle image upload using Spatie Media Library
         if (isset($data['image'])) {
+            $originalFilename = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($originalFilename, PATHINFO_FILENAME) . '-avatar.jpg';
+            
             $user->addMediaFromRequest('image')
-                 ->toMediaCollection('avatar');
+                ->usingFileName($filename)
+                ->toMediaCollection('avatar');
         }
 
         // Handle avatar removal if needed
         if ($request->has('remove_avatar')) {
             $user->clearMediaCollection('avatar');
+            $user->image = null; // Clear the column too
         }
 
         $user->fill($request->except(['image', 'remove_avatar']));
