@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                     @if($posts->count())
                         @foreach($posts as $post)
-                            <x-post-card :post="$post" />
+                            <x-post-item :post="$post" />
                         @endforeach
                         
                         <div class="mt-4">

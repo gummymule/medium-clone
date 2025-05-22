@@ -18,7 +18,7 @@
                 })
         },
         save() {
-            axios.post('/save/{{ $post->id }}')
+            axios.post('/saved/{{ $post->id }}')
             .then(res => {
                 this.isSaved = !this.isSaved
             })

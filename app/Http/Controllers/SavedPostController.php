@@ -18,6 +18,6 @@ class SavedPostController extends Controller
     public function index()
     {
         $posts = auth()->user()->savedPosts()->latest()->paginate(10);
-        return view('posts.saved', compact('posts'));
+        return view('post.saved', compact('posts'));
     }
 }

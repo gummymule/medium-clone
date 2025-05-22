@@ -27,9 +27,11 @@ class ProfileController extends Controller
             $originalFilename = $request->file('image')->getClientOriginalName();
             $filename = pathinfo($originalFilename, PATHINFO_FILENAME) . '-avatar.jpg';
             
-            $user->addMediaFromRequest('image')
+            $media = $user->addMediaFromRequest('image')
                 ->usingFileName($filename)
                 ->toMediaCollection('avatar');
+            
+            $user->image = $media->getUrl('avatar');
         }
 
         // Handle avatar removal if needed
