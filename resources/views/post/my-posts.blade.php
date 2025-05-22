@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Saved Posts') }}
+            {{ __('My Posts') }}
         </h2>
     </x-slot>
 
@@ -18,7 +18,7 @@
                             {{ $posts->links() }}
                         </div>
                     @else
-                        <p>You haven't saved any posts yet.</p>
+                        <p>You haven't any posts yet.</p>
                     @endif
                 </div>
             </div>

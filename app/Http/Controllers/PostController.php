@@ -150,7 +150,7 @@ class PostController extends Controller
             ->with(['user'])
             ->withCount('claps')
             ->latest()->simplePaginate(5);
-        return view('post.index', [
+        return view('post.my-posts', [
             'posts' => $posts,
         ]);
     }
