@@ -19,11 +19,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/run-migrate', function () {
-    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-    return '✅ Migration success!';
-});
-
 Route::get('/@{user:username}', [PublicProfileController::class, 'show'])
     ->name('profile.show');
 
