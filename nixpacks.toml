@@ -4,7 +4,7 @@ APP_DEBUG = "false"
 APP_URL = "https://medium-clone-production-a828.up.railway.app"
 
 [phases.setup]
-nixPkgs = ["php82", "php82Packages.composer", "nodejs_20", "mysql", "yarn", "coreutils"]
+nixPkgs = ["php82", "php82Packages.composer", "nodejs_20", "mariadb", "yarn", "coreutils"]
 
 [phases.install]
 cmds = [
