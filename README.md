@@ -28,7 +28,7 @@ A full-featured Medium.com clone built with **Laravel**. This project replicates
 
 1. Clone the repo:
    ```bash
-    git clone https://github.com/yourusername/medium-clone-laravel.git
+    git clone https://github.com/yourusername/medium-clone.git
     cd medium-clone-laravel
     ```
 2. Install dependencies:
