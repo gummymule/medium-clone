@@ -28,24 +28,24 @@ A full-featured Medium.com clone built with **Laravel**. This project replicates
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/yourusername/medium-clone-laravel.git
-   cd medium-clone-laravel
+    git clone https://github.com/yourusername/medium-clone-laravel.git
+    cd medium-clone-laravel
     ```
 2. Install dependencies:
-  ```bash
-  composer install
-  npm install && npm run dev
-  ```
+    ```bash
+    composer install
+    npm install && npm run dev
+    ```
 3. Setup environment
-  ```bash
-  cp .env.example .env
-  php artisan key:generate
-  ```
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
 4. Configure your ```.env``` and run migrations:
-  ```bash
-  php artisan migrate --seed
-  ```
+    ```bash
+    php artisan migrate --seed
+    ```
 5. Run the server
-  ```bash
-  php artisan serve
-  ```
+    ```bash
+    php artisan serve
+    ```
