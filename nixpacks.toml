@@ -1,25 +1,23 @@
+[variables]
+APP_ENV = "production"
+APP_DEBUG = "false"
+APP_URL = "https://medium-clone-production-a828.up.railway.app"
+
 [phases.setup]
-nixpkgs = [
-  "php82",
-  "php82Packages.composer",
-  "php82Extensions.pdo",
-  "php82Extensions.pdo_mysql",
-  "php82Extensions.fileinfo",
-  "php82Extensions.mbstring",
-  "php82Extensions.tokenizer",
-  "php82Extensions.xml",
-  "php82Extensions.curl",
-  "nodejs_20"
+nixPkgs = ["php82", "php82Packages.composer", "nodejs_20", "mysql", "yarn", "coreutils"]
+
+[phases.install]
+cmds = [
+  "composer install --no-dev --optimize-autoloader",
+  "npm install"
 ]
 
 [phases.build]
 cmds = [
-  "composer install --no-dev --optimize-autoloader",
   "php artisan migrate --force",
   "php artisan db:seed --force",
   "php artisan config:cache",
   "php artisan storage:link",
-  "npm install",
   "npm run build"
 ]
 
